@@ -11,6 +11,8 @@ namespace WpfAppIoTCSVTranslator
     {
         public static readonly string DTDLMark_DeviceId = "for DeviceId";
         public static readonly string DTDLMark_Timestamp = "for Timestamp";
+        public static readonly string DTDLMark_Timestamp_AddKey = "Ticks";
+
         public static readonly string DTDLMark_ColmnOrder = "column order=";
         public string ModelId { get; set; }
         public string ModelDisplayName { get; set; }
@@ -59,6 +61,8 @@ namespace WpfAppIoTCSVTranslator
                 {
                     var description = $"Additional Property {DTDLMark_Timestamp}";
                     AddPropertyDefinition(writer, null, TimestampName, TimestampName, "dateTime", description, ",");
+                    description = $"Additional Property {DTDLMark_Timestamp}{DTDLMark_Timestamp_AddKey}";
+                    AddPropertyDefinition(writer, null, $"{TimestampName}{DTDLMark_Timestamp_AddKey}", $"{TimestampName}{DTDLMark_Timestamp_AddKey}", "long", description, ",");
                 }
                 for (int i = 0; i < CSVColums.Count; i++)
                 {

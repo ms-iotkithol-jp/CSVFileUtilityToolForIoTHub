@@ -6,6 +6,7 @@ using Microsoft.WindowsAPICodePack.Dialogs;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Text;
@@ -271,7 +272,7 @@ namespace WpfAppIoTCSVTranslator
                 {
                     if (e.Completed)
                     {
-                        tbSendEndTime.Text = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+                        tbSendEndTime.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
                         buttonSendStart.IsEnabled = true;
                         buttonSendStop.IsEnabled = false;
                     }
@@ -283,7 +284,7 @@ namespace WpfAppIoTCSVTranslator
                 currentSendIntervalMSec, currentTimestampPropertyName, singleLineSending, startTimeForTimestamp, deltaMSecForTimestamp,
                 deviceIdPropertyName,deviceIdPropertyValue,
                 sendDataSizeMax, gzipSend);
-            tbSendingStartTime.Text = DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss");
+            tbSendingStartTime.Text = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
             buttonSendStart.IsEnabled = false;
             buttonSendStop.IsEnabled = true;
         }
@@ -322,7 +323,7 @@ namespace WpfAppIoTCSVTranslator
             if (cbUseMeasuredTime.IsChecked.Value)
             {
                 tbDeltaMSec.IsEnabled = true;
-                tbTimestampStartTime.Text = DateTime.Now.ToString("yyyy/MM/ddTHH:mm:ss.fff");
+                tbTimestampStartTime.Text = DateTime.Now.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
                 tbTimestampStartTime.IsEnabled = true;
             }
             else
@@ -407,7 +408,6 @@ namespace WpfAppIoTCSVTranslator
                     }
                 }
                 buttonTranslateColumnName.IsEnabled = true;
-                buttonGenerateDTDL.IsEnabled = true;
             }
             catch(Exception ex)
             {
@@ -418,13 +418,27 @@ namespace WpfAppIoTCSVTranslator
 
         private void buttonTranslateColumnName_Click(object sender, RoutedEventArgs e)
         {
-            for(int i = 0; i < csvColumns.Count(); i++)
+            try
             {
-                if (string.IsNullOrEmpty(csvColumns[i].DisplayName))
+                for (int i = 0; i < csvColumns.Count(); i++)
                 {
-                    csvColumns[i].DisplayName = csvColumns[i].Name;
-                    csvColumns[i].Name = csvColumns[i].Name.Replace(" ", "_");
+                    if (string.IsNullOrEmpty(csvColumns[i].DisplayName))
+                    {
+                        var name = csvColumns[i].Name;
+                        csvColumns[i].DisplayName = name;
+                        if (name.IndexOf(" ") >= 0)
+                        {
+                            name = name.Trim();
+                            name = name.Replace(" ", "_");
+                        }
+                        csvColumns[i].Name = name;
+                    }
                 }
+                buttonGenerateDTDL.IsEnabled = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 
@@ -725,6 +739,30 @@ namespace WpfAppIoTCSVTranslator
                     target.SchemaName = target.Schema.Substring(target.Schema.LastIndexOf(" ") + 1);
                 }
             }
+        }
+
+        private void tbModelId_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var lastModelId = ((TextBox)sender).Text;
+            if (tbDeviceIdId != null)
+            {
+                var deviceIdId = tbDeviceIdId.Text;
+                foreach (var c in e.Changes)
+                {
+                    Debug.WriteLine($"AddedLength{c.AddedLength},RemoveLength{c.RemovedLength},Offset{c.Offset}");
+                    var addedString = lastModelId.Substring(c.Offset, c.AddedLength);
+                    var deviceIdIdS = deviceIdId.Substring(0, c.Offset);
+                    var deviceIdIdE = deviceIdId.Substring(c.Offset+c.RemovedLength);
+                    deviceIdId = deviceIdIdS + addedString + deviceIdIdE;
+                    Debug.WriteLine($"New DeviceIdId:{deviceIdId}");
+                }
+                tbDeviceIdId.Text = deviceIdId;
+            }
+        }
+
+        private void buttonGenerateTypeFileForTSI_Click(object sender, RoutedEventArgs e)
+        {
+            MessageBox.Show("Under construction");
         }
     }
 

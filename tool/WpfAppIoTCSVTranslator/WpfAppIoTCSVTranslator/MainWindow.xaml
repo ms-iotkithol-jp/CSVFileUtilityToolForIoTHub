@@ -91,7 +91,7 @@
                     </Grid.ColumnDefinitions>
                     <TextBlock Text="Model" VerticalAlignment="Center"/>
                     <TextBlock Text="@id : " Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                        <TextBox Name="tbModelId" Text="dtmi:&lt;- user definition -&gt;;1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" />
+                        <TextBox Name="tbModelId" Text="dtmi:&lt;- user definition -&gt;;1" Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextChanged="tbModelId_TextChanged"/>
                     <TextBlock Text="Display Name : " VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="3"/>
                     <TextBox Name="tbModelDisplayName" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="4"/>
                 </Grid>
@@ -109,7 +109,7 @@
                         <TextBlock Text="@id : " VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="1"/>
                         <TextBox Name="tbDeviceIdId" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="2" Text="dtmi:&lt;- user definition -&gt;:deviceid;1"/>
                         <TextBlock Text="Name : " VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="3"/>
-                        <TextBox Name="tbDeviceIdName" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="4" Text="Device Id"/>
+                        <TextBox Name="tbDeviceIdName" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="4" Text="deviceid"/>
                     </Grid>
                 </Border>
                 <Border Grid.Row="4" Margin="1" BorderBrush="Black" BorderThickness="1">
@@ -123,7 +123,7 @@
                         <TextBlock Text="Device Id Display Name : " VerticalAlignment="Center" HorizontalAlignment="Right"/>
                         <TextBox Name="tbDeviceIdDisplayName" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="1" Text="Device Id"/>
                         <TextBlock Text="Timestamp Name : " VerticalAlignment="Center" HorizontalAlignment="Right" Grid.Column="2"/>
-                        <TextBox Name="tbTDTDLTimestampName" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="3" Text="timestamp"/>
+                        <TextBox Name="tbTDTDLTimestampName" VerticalAlignment="Center" HorizontalAlignment="Stretch" Grid.Column="3" Text="measuredtime"/>
                     </Grid>
                 </Border>
                 <Grid Grid.Row="5">
@@ -150,7 +150,7 @@
                         <ScrollViewer >
                             <TextBox Name="tbDTDL"/>
                         </ScrollViewer>
-                        <Button Name="buttonGenerateTypeFileForTSI" Content="Generate TSI Type definition" Grid.Row="1" Margin="1"/>
+                        <Button Name="buttonGenerateTypeFileForTSI" Content="Generate TSI Type definition" Grid.Row="1" Margin="1" Click="buttonGenerateTypeFileForTSI_Click"/>
                     </Grid>
                 </Border>
                 <Grid Grid.Column="1">
@@ -207,7 +207,7 @@
                                 <CheckBox Name="cbZGIP" Content="GZip" VerticalAlignment="Center"/>
                                 <CheckBox Name="cbAddTimestamp" Grid.Column="1" Content="Add Timestamp" VerticalAlignment="Center" Checked="cbAddTimestamp_Checked"/>
                                 <TextBlock Text="Name : " Grid.Column="2" VerticalAlignment="Center" HorizontalAlignment="Right"/>
-                                <TextBox Name="tbTimestampName" Text="timestamp" Grid.Column="3" VerticalAlignment="Center"/>
+                                <TextBox Name="tbTimestampName" Text="measuredtime" Grid.Column="3" VerticalAlignment="Center"/>
                                 <CheckBox Name="cbUseMeasuredTime" Content="Data Time" VerticalAlignment="Center" Grid.Column="4" Checked="cbUseMeasuredTime_Checked" Unchecked="cbUseMeasuredTime_Checked"/>
                             </Grid>
                             <Grid Grid.Row="4">

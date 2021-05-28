@@ -195,8 +195,8 @@ namespace WpfAppIoTCSVTranslator
             if (!string.IsNullOrEmpty(timestampPropertyName))
             {
                 var row = line.Substring(0, line.LastIndexOf(System.Environment.NewLine));
-                string timestamp = CreateTimstampProperty();
-                line = $"{row},{timestamp}" + System.Environment.NewLine;
+                var timestampProp = CreateTimstampProperty();
+                line = $"{row},{timestampProp.timestamp},{timestampProp.timestampTicks}" + System.Environment.NewLine;
             }
             if (!string.IsNullOrEmpty(deviceIdPropertyValue))
             {
@@ -317,8 +317,8 @@ namespace WpfAppIoTCSVTranslator
             }
             if (!string.IsNullOrEmpty(timestampPropertyName))
             {
-                string timestamp = CreateTimstampProperty();
-                jsonMsg += $",\"{timestampPropertyName}\":\"{timestamp}\"";
+                var timestampProp = CreateTimstampProperty();
+                jsonMsg += $",\"{timestampPropertyName}\":\"{timestampProp.timestamp}\",\"{timestampPropertyName}{DTDLGenerator.DTDLMark_Timestamp_AddKey}\":{timestampProp.timestampTicks}";
             }
             if (!string.IsNullOrEmpty(deviceIdPropertyName))
             {
@@ -394,20 +394,24 @@ namespace WpfAppIoTCSVTranslator
             return (sendMsg, dataSize);
         }
 
-        private string CreateTimstampProperty()
+        private (string timestamp, long timestampTicks) CreateTimstampProperty()
         {
             string timestamp = "";
+            long timestampTicks = 0;
             if (string.IsNullOrEmpty(startTimeForTimestamp))
             {
-                timestamp = DateTime.Now.ToString("yyyy/MM/ddTHH:mm:ss.fff");
+                var now = DateTime.Now;
+                timestamp = now.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
+                timestampTicks = now.Ticks;
             }
             else
             {
-                timestamp = dataTime.ToString("yyyy/MM/ddTHH:mm:ss.fff");
+                timestamp = dataTime.ToString("yyyy-MM-ddTHH:mm:ss.fffZ");
+                timestampTicks = dataTime.Ticks;
                 dataTime = dataTime.Add(TimeSpan.FromMilliseconds(deltaMSecForTimestamp));
             }
 
-            return timestamp;
+            return (timestamp, timestampTicks);
         }
 
         private static async Task<byte[]> GzipCompress(byte[] msgBytes)
