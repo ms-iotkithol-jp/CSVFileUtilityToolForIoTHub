@@ -760,9 +760,10 @@ namespace WpfAppIoTCSVTranslator
             }
         }
 
+        TSITypeGenerator tsiTypeGeneratorWindow = new TSITypeGenerator();
         private void buttonGenerateTypeFileForTSI_Click(object sender, RoutedEventArgs e)
         {
-            MessageBox.Show("Under construction");
+            tsiTypeGeneratorWindow.Show();
         }
     }
 
