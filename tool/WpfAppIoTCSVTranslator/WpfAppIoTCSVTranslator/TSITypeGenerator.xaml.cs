@@ -361,5 +361,11 @@ namespace WpfAppIoTCSVTranslator
 
         }
 
+        private void tbDeviceId_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            var instH = tbInstanceHiearchies.Text;
+            instH = instH.Substring(0, instH.LastIndexOf("=")+1) + tbDeviceId.Text;
+            tbInstanceHiearchies.Text = instH;
+        }
     }
 }

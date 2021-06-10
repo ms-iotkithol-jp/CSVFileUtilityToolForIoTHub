@@ -60,7 +60,7 @@
                 <Grid.RowDefinitions>
                     <RowDefinition Height="25"/>
                     <RowDefinition Height="25"/>
-                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="150"/>
                     <RowDefinition Height="25"/>
                     <RowDefinition/>
                     <RowDefinition Height="25"/>
@@ -85,7 +85,7 @@
                     <RowDefinition Height="25"/>
                     <RowDefinition Height="25"/>
                     <RowDefinition Height="25"/>
-                    <RowDefinition Height="100"/>
+                    <RowDefinition Height="125"/>
                     <RowDefinition Height="25"/>
                     <RowDefinition/>
                     <RowDefinition Height="25"/>
@@ -97,7 +97,7 @@
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
                     <Button Name="buttonAddDeviceId" Content="Add Instance(Device Id)" Margin="1" Click="buttonAddDeviceId_Click"/>
-                    <TextBox Name="tbDeviceId" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch"/>
+                    <TextBox Name="tbDeviceId" Grid.Column="1" VerticalAlignment="Center" HorizontalAlignment="Stretch" TextChanged="tbDeviceId_TextChanged"/>
                 </Grid>
                 <Grid Grid.Row="2">
                     <Grid.ColumnDefinitions>

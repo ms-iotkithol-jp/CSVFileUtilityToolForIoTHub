@@ -150,7 +150,7 @@
                         <ScrollViewer >
                             <TextBox Name="tbDTDL"/>
                         </ScrollViewer>
-                        <Button Name="buttonGenerateTypeFileForTSI" Content="Generate TSI Type definition" Grid.Row="1" Margin="1" Click="buttonGenerateTypeFileForTSI_Click"/>
+                        <Button Name="buttonGenerateTypeFileForTSI" Content="Generate TSI Model definition" Grid.Row="1" Margin="1" Click="buttonGenerateTypeFileForTSI_Click"/>
                     </Grid>
                 </Border>
                 <Grid Grid.Column="1">
